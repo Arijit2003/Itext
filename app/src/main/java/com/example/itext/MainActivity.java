@@ -13,6 +13,7 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.layout.Document;
+import com.itextpdf.layout.element.List;
 import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.element.Text;
 
@@ -83,6 +84,17 @@ public class MainActivity extends AppCompatActivity {
                     .add(text2)
                     .add(text3);
             document.add(paragraph1);
+
+
+            // Adding a list
+            List list = new List();
+            list.add("C++").setBold().setFontSize(24.54f);
+            list.add("C").setBold().setFontSize(24.54f);
+            list.add("Java").setBold().setFontSize(24.54f);
+            list.add("Kotlin").setBold().setFontSize(24.54f);
+            list.add("SQL/PLSQL").setBold().setFontSize(24.54f);
+            list.add("Python").setBold().setFontSize(24.54f);
+            document.add(list);
 
             document.close();
 
