@@ -3,6 +3,10 @@ package com.example.itext;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Environment;
 import android.view.View;
@@ -10,13 +14,17 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputEditText;
+import com.itextpdf.io.image.ImageData;
+import com.itextpdf.io.image.ImageDataFactory;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.layout.Document;
+import com.itextpdf.layout.element.Image;
 import com.itextpdf.layout.element.List;
 import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.element.Text;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Objects;
@@ -70,6 +78,7 @@ public class MainActivity extends AppCompatActivity {
             file = new File(pdfPath,pdfName.getText().toString()+".pdf");
         }
         if(!file.exists()) {
+
             PdfWriter pdfWriter = new PdfWriter(file);
             PdfDocument pdfDocument = new PdfDocument(pdfWriter);
             Document document = new Document(pdfDocument);
@@ -80,9 +89,7 @@ public class MainActivity extends AppCompatActivity {
             Text text2= new Text("Italic").setItalic();
             Text text3= new Text("Underline").setUnderline();
             Paragraph paragraph1 = new Paragraph();
-            paragraph1.add(text1)
-                    .add(text2)
-                    .add(text3);
+            paragraph1.add(text1).add(text2).add(text3);
             document.add(paragraph1);
 
 
@@ -96,6 +103,17 @@ public class MainActivity extends AppCompatActivity {
             list.add("Python").setBold().setFontSize(24.54f);
             document.add(list);
 
+            //Adding Image
+            @SuppressLint("UseCompatLoadingForDrawables")
+            Drawable drawable = getDrawable(R.drawable.img);
+            BitmapDrawable bitmapDrawable = (BitmapDrawable) drawable;
+            Bitmap bitmap = bitmapDrawable.getBitmap();
+            ByteArrayOutputStream stream= new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.JPEG,80,stream);
+            byte[] byteArray = stream.toByteArray();
+            ImageData imageData = ImageDataFactory.create(byteArray);
+            Image image = new Image(imageData);
+            document.add(image);
             document.close();
 
             Toast.makeText(MainActivity.this, pdfName.getText().toString() + " created successfully", Toast.LENGTH_SHORT).show();
