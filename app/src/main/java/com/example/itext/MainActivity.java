@@ -14,6 +14,7 @@ import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.layout.Document;
 import com.itextpdf.layout.element.Paragraph;
+import com.itextpdf.layout.element.Text;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -73,6 +74,16 @@ public class MainActivity extends AppCompatActivity {
             Document document = new Document(pdfDocument);
             Paragraph paragraph = new Paragraph(Objects.requireNonNull(pdfContent.getText()).toString());
             document.add(paragraph);
+
+            Text text1= new Text("Bold").setBold();
+            Text text2= new Text("Italic").setItalic();
+            Text text3= new Text("Underline").setUnderline();
+            Paragraph paragraph1 = new Paragraph();
+            paragraph1.add(text1)
+                    .add(text2)
+                    .add(text3);
+            document.add(paragraph1);
+
             document.close();
 
             Toast.makeText(MainActivity.this, pdfName.getText().toString() + " created successfully", Toast.LENGTH_SHORT).show();
