@@ -16,9 +16,12 @@ import android.widget.Toast;
 import com.google.android.material.textfield.TextInputEditText;
 import com.itextpdf.io.image.ImageData;
 import com.itextpdf.io.image.ImageDataFactory;
+import com.itextpdf.kernel.colors.Color;
+import com.itextpdf.kernel.colors.ColorConstants;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.layout.Document;
+import com.itextpdf.layout.element.Cell;
 import com.itextpdf.layout.element.Image;
 import com.itextpdf.layout.element.List;
 import com.itextpdf.layout.element.Paragraph;
@@ -117,10 +120,10 @@ public class MainActivity extends AppCompatActivity {
             document.add(image);
 
             //Adding a table in pdf
-            float columnWidths[] = {200f,200f};
+            float[] columnWidths = {200f,200f};
             Table table = new Table(columnWidths);
-            table.addCell("Name");
-            table.addCell("Age");
+            table.addCell(new Cell().setBackgroundColor(ColorConstants.CYAN).add(new Paragraph("Name")));
+            table.addCell(new Cell().setBackgroundColor(ColorConstants.CYAN).add(new Paragraph("Age")));
 
             table.addCell("Arijit Modak");
             table.addCell("20");
