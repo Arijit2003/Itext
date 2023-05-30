@@ -21,6 +21,8 @@ import com.itextpdf.kernel.colors.ColorConstants;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.layout.Document;
+import com.itextpdf.layout.borders.Border;
+import com.itextpdf.layout.borders.RidgeBorder;
 import com.itextpdf.layout.element.Cell;
 import com.itextpdf.layout.element.Image;
 import com.itextpdf.layout.element.List;
@@ -130,6 +132,11 @@ public class MainActivity extends AppCompatActivity {
 
             table.addCell("Braj Kishor Sharma");
             table.addCell("21");
+
+            //table border
+            Border border = new RidgeBorder(2);
+            border.setColor(ColorConstants.BLACK);
+            table.setBorder(border);
             document.add(table);
             document.close();
 
