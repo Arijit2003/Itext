@@ -22,6 +22,7 @@ import com.itextpdf.layout.Document;
 import com.itextpdf.layout.element.Image;
 import com.itextpdf.layout.element.List;
 import com.itextpdf.layout.element.Paragraph;
+import com.itextpdf.layout.element.Table;
 import com.itextpdf.layout.element.Text;
 
 import java.io.ByteArrayOutputStream;
@@ -114,6 +115,19 @@ public class MainActivity extends AppCompatActivity {
             ImageData imageData = ImageDataFactory.create(byteArray);
             Image image = new Image(imageData);
             document.add(image);
+
+            //Adding a table in pdf
+            float columnWidths[] = {200f,200f};
+            Table table = new Table(columnWidths);
+            table.addCell("Name");
+            table.addCell("Age");
+
+            table.addCell("Arijit Modak");
+            table.addCell("20");
+
+            table.addCell("Braj Kishor Sharma");
+            table.addCell("21");
+            document.add(table);
             document.close();
 
             Toast.makeText(MainActivity.this, pdfName.getText().toString() + " created successfully", Toast.LENGTH_SHORT).show();
