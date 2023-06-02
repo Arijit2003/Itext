@@ -101,6 +101,7 @@ public class MainActivity extends AppCompatActivity {
 
             // Adding a list
             List list = new List();
+            list.setListSymbol("\u007D ");
             list.add("C++").setBold().setFontSize(24.54f);
             list.add("C").setBold().setFontSize(24.54f);
             list.add("Java").setBold().setFontSize(24.54f);
@@ -134,6 +135,7 @@ public class MainActivity extends AppCompatActivity {
             table.addCell("21");
 
             //table border
+
             Border border = new RidgeBorder(2);
             border.setColor(ColorConstants.BLACK);
             table.setBorder(border);
