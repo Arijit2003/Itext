@@ -7,6 +7,7 @@ import android.annotation.SuppressLint;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.icu.util.LocaleData;
 import android.os.Bundle;
 import android.os.Environment;
 import android.view.View;
@@ -19,6 +20,7 @@ import com.itextpdf.io.image.ImageData;
 import com.itextpdf.io.image.ImageDataFactory;
 import com.itextpdf.kernel.colors.Color;
 import com.itextpdf.kernel.colors.ColorConstants;
+import com.itextpdf.kernel.geom.PageSize;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.kernel.pdf.xobject.PdfFormXObject;
@@ -31,6 +33,8 @@ import com.itextpdf.layout.element.List;
 import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.element.Table;
 import com.itextpdf.layout.element.Text;
+import com.itextpdf.layout.property.HorizontalAlignment;
+import com.itextpdf.layout.property.TextAlignment;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -90,15 +94,17 @@ public class MainActivity extends AppCompatActivity {
             PdfWriter pdfWriter = new PdfWriter(file);
             PdfDocument pdfDocument = new PdfDocument(pdfWriter);
             Document document = new Document(pdfDocument);
+            //pdfDocument.setDefaultPageSize(PageSize.A6);
+            //document.setMargins(20,20,20,20);
             Paragraph paragraph = new Paragraph(Objects.requireNonNull(pdfContent.getText()).toString());
-            document.add(paragraph);
+            document.add(paragraph.setTextAlignment(TextAlignment.CENTER));
 
             Text text1= new Text("Bold").setBold();
             Text text2= new Text("Italic").setItalic();
             Text text3= new Text("Underline").setUnderline();
             Paragraph paragraph1 = new Paragraph();
             paragraph1.add(text1).add(text2).add(text3);
-            document.add(paragraph1);
+            document.add(paragraph1.setTextAlignment(TextAlignment.CENTER));
 
 
             // Adding a list
@@ -122,7 +128,7 @@ public class MainActivity extends AppCompatActivity {
             list.add("Kotlin").setBold().setFontSize(24.54f);
             list.add("SQL/PLSQL").setBold().setFontSize(24.54f);
             list.add("Python").setBold().setFontSize(24.54f);
-            document.add(list);
+            document.add(list.setTextAlignment(TextAlignment.CENTER));
 
             //Adding Image
             @SuppressLint("UseCompatLoadingForDrawables")
@@ -134,7 +140,7 @@ public class MainActivity extends AppCompatActivity {
             byte[] byteArray = stream.toByteArray();
             ImageData imageData = ImageDataFactory.create(byteArray);
             Image image = new Image(imageData);
-            document.add(image);
+            document.add(image.setHorizontalAlignment(HorizontalAlignment.CENTER));
 
             //Adding a table in pdf
             float[] columnWidths = {200f,200f};
@@ -153,14 +159,15 @@ public class MainActivity extends AppCompatActivity {
             Border border = new RidgeBorder(2);
             border.setColor(ColorConstants.BLACK);
             table.setBorder(border);
-            document.add(table);
+            document.add(table.setHorizontalAlignment(HorizontalAlignment.CENTER));
 
 
             // Adding qr code
             BarcodeQRCode barcodeQRCode = new BarcodeQRCode("Hi, I am Arijit, an android developer from india");
             PdfFormXObject pdfFormXObject  = barcodeQRCode.createFormXObject(ColorConstants.MAGENTA,pdfDocument);
             Image barcodeImage = new Image(pdfFormXObject).setWidth(100).setHeight(100);
-            document.add(barcodeImage);
+
+            document.add(barcodeImage.setHorizontalAlignment(HorizontalAlignment.CENTER));
             document.close();
 
             Toast.makeText(MainActivity.this, pdfName.getText().toString() + " created successfully", Toast.LENGTH_SHORT).show();
