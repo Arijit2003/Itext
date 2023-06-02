@@ -14,12 +14,14 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputEditText;
+import com.itextpdf.barcodes.BarcodeQRCode;
 import com.itextpdf.io.image.ImageData;
 import com.itextpdf.io.image.ImageDataFactory;
 import com.itextpdf.kernel.colors.Color;
 import com.itextpdf.kernel.colors.ColorConstants;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
+import com.itextpdf.kernel.pdf.xobject.PdfFormXObject;
 import com.itextpdf.layout.Document;
 import com.itextpdf.layout.borders.Border;
 import com.itextpdf.layout.borders.RidgeBorder;
@@ -152,6 +154,13 @@ public class MainActivity extends AppCompatActivity {
             border.setColor(ColorConstants.BLACK);
             table.setBorder(border);
             document.add(table);
+
+
+            // Adding qr code
+            BarcodeQRCode barcodeQRCode = new BarcodeQRCode("Hi, I am Arijit, an android developer from india");
+            PdfFormXObject pdfFormXObject  = barcodeQRCode.createFormXObject(ColorConstants.MAGENTA,pdfDocument);
+            Image barcodeImage = new Image(pdfFormXObject).setWidth(100).setHeight(100);
+            document.add(barcodeImage);
             document.close();
 
             Toast.makeText(MainActivity.this, pdfName.getText().toString() + " created successfully", Toast.LENGTH_SHORT).show();
