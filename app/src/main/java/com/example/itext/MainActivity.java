@@ -101,7 +101,19 @@ public class MainActivity extends AppCompatActivity {
 
             // Adding a list
             List list = new List();
-            list.setListSymbol("\u007D ");
+            //Changing list symbol (using image)
+            @SuppressLint("UseCompatLoadingForDrawables")
+            Drawable drawable2 = getDrawable(R.drawable.img_1);
+            Bitmap bitmap2 = ((BitmapDrawable)drawable2).getBitmap();
+            ByteArrayOutputStream stream2= new ByteArrayOutputStream();
+            bitmap2.compress(Bitmap.CompressFormat.PNG,100,stream2);
+            byte[] byteArray2 = stream2.toByteArray();
+            ImageData imageData2  = ImageDataFactory.create(byteArray2);
+            Image image2  = new Image(imageData2);
+            image2.setWidth(14);
+            image2.setHeight(14);
+
+            list.setListSymbol(image2);
             list.add("C++").setBold().setFontSize(24.54f);
             list.add("C").setBold().setFontSize(24.54f);
             list.add("Java").setBold().setFontSize(24.54f);
